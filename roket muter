@@ -1,0 +1,58 @@
+function setup() {
+  // Membuat canvas 3D
+  createCanvas(400, 400, WEBGL);
+}
+
+function draw() {
+  // Mengatur background
+  background(200);
+
+  // Menambahkan pencahayaan
+  directionalLight(255, 255, 255, 0.5, 1, -0.5);
+  ambientLight(100);
+
+  // Rotasi roket
+  rotateY(frameCount * 0.01);
+
+  // Membuat roket
+  push();
+
+  // Bagian mesin (silinder bawah)
+  push();
+  translate(0, 75, 0); // Posisi di bawah
+  fill(50); // Warna abu-abu gelap
+  cylinder(30, 50); // Silinder dengan radius 30 dan tinggi 50
+  pop();
+
+  // Bagian badan (silinder tengah)
+  push();
+  translate(0, 0, 0); // Posisi di tengah
+  fill(150, 0, 255); // Warna ungu
+  cylinder(20, 150); // Silinder dengan radius 20 dan tinggi 150
+  pop();
+
+  // Sayap roket (prisma segitiga)
+  for (let i = 0; i < 3; i++) {
+    push();
+    rotateY((TWO_PI / 3) * i); // Rotasi untuk membuat sayap melingkar
+    translate(0, 50, -25); // Geser ke posisi sayap
+    fill(200, 50, 50); // Warna merah
+    beginShape();
+    vertex(0, -25, 0); // Titik atas segitiga
+    vertex(-20, 25, -10); // Titik kiri bawah
+    vertex(20, 25, -10); // Titik kanan bawah
+    endShape(CLOSE);
+    pop();
+  }
+
+  // Bagian kerucut (puncak)
+  push();
+translate(0, -125, 0); // Posisi di atas badan
+rotateX(PI); // Membalik kerucut agar puncaknya mengarah ke atas
+fill(200, 200, 50); // Warna kuning
+cone(20, 50); // Kerucut dengan radius 20 dan tinggi 50
+pop();
+
+
+  pop();
+}
